@@ -1,7 +1,7 @@
 # Cloudflare Workers 配置文件
 # 本小姐优雅的配置 (￣ω￣)ノ
 
-name = "anthropic-proxy-worker"
+name = "anyroutertransparentproxy"
 main = "src/index.ts"
 compatibility_date = "2025-01-17"
 
