@@ -1,0 +1,27 @@
+# Cloudflare Workers 配置文件
+# 本小姐优雅的配置 (￣ω￣)ノ
+
+name = "anthropic-proxy-worker"
+main = "src/index.ts"
+compatibility_date = "2025-01-17"
+
+# Workers 日志
+[observability]
+enabled = true
+
+# 环境变量配置 (开发环境)
+# 注意：敏感信息应该在 Cloudflare Dashboard 中配置，不要写在这里！
+[vars]
+# API_BASE_URL = "https://anyrouter.top"  # 默认值，可以不设置
+# SYSTEM_PROMPT_REPLACEMENT = ""  # 留空或设置你的自定义 prompt
+# CUSTOM_HEADERS = "{}"  # JSON 字符串格式的自定义 headers
+
+# 生产环境配置示例
+[env.production]
+name = "anthropic-proxy-worker-prod"
+# vars 在 Cloudflare Dashboard 中配置
+
+# 开发环境配置示例
+[env.development]
+name = "anthropic-proxy-worker-dev"
+# vars.API_BASE_URL = "https://q.quuvv.cn"  # 备用地址

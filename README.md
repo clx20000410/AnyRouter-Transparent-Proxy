@@ -1,6 +1,12 @@
 # AnyRouter Transparent Proxy
 
-一个基于 FastAPI 的轻量级透明 HTTP 代理服务，专为解决 AnyRouter 的 Anthropic API 在 Claude Code for VS Code 插件中报错 500 的问题而设计。
+一个轻量级透明 HTTP 代理服务，专为解决 AnyRouter 的 Anthropic API 在 Claude Code for VS Code 插件中报错 500 的问题而设计。
+
+**🆕 现在支持两种部署方式：**
+- **Python 版本** - 基于 FastAPI，适合传统服务器/Docker 部署
+- **⚡ Cloudflare Workers 版本** - 全球 CDN 边缘节点，零服务器维护（本小姐新写的！）
+
+> 💡 **快速选择**：想要免费、快速、全球部署？→ [跳转到 Cloudflare Workers 部署](#cloudflare-workers-部署-推荐)
 
 ## 效果图
 
@@ -10,8 +16,9 @@
 ## 目录
 
 - [核心特性](#核心特性)
-- [快速开始](#快速开始)
-  - [Docker 部署（推荐）](#docker-部署推荐)
+- [Cloudflare Workers 部署（推荐）](#cloudflare-workers-部署-推荐)
+- [Python 版本部署](#python-版本部署)
+  - [Docker 部署](#docker-部署)
   - [本地运行](#本地运行)
 - [配置说明](#配置说明)
 - [核心功能](#核心功能)
@@ -22,15 +29,68 @@
 ## 核心特性
 
 - **完全透明** - 支持所有 HTTP 方法，无缝代理请求
-- **流式响应** - 基于 `httpx.AsyncClient` 异步架构，完美支持流式传输
+- **流式响应** - 完美支持流式传输
 - **标准兼容** - 严格遵循 RFC 7230 规范，正确处理 HTTP 头部
 - **灵活配置** - 支持环境变量配置目标 URL 和 System Prompt 替换
 - **高性能** - 连接池复用，异步处理，高效应对并发请求
 - **智能处理** - 自动计算 Content-Length，避免请求体修改导致的协议错误
+- **🆕 双版本支持** - Python 和 Cloudflare Workers 两种部署方式
 
-## 快速开始
+---
 
-### Docker 部署（推荐）
+## Cloudflare Workers 部署（推荐）
+
+> **本小姐优雅地改写的 TypeScript 版本！(￣▽￣)ノ**
+
+### ✨ 为什么选择 Workers 版本？
+
+- ⚡ **全球 CDN** - 自动部署到全球边缘节点，延迟超低
+- 💰 **免费额度充足** - 每天 100,000 请求完全免费
+- 🚀 **零服务器维护** - 无需管理服务器、Docker 或 VPS
+- 📈 **自动扩展** - 流量再大也不怕，自动无缝扩展
+- 🛡️ **内置安全** - Cloudflare 全球防护，DDoS 防御
+- ⚙️ **秒级部署** - 从零到上线只需 3 分钟
+
+### 🚀 3 分钟快速部署
+
+```bash
+# 1. 安装依赖
+npm install
+
+# 2. 登录 Cloudflare
+npx wrangler login
+
+# 3. 部署！
+npm run deploy
+```
+
+**就这么简单！** 🎉
+
+部署成功后，你会得到一个全球可访问的 URL：
+```
+https://anthropic-proxy-worker.your-subdomain.workers.dev
+```
+
+### ⚙️ 配置环境变量
+
+在 Cloudflare Dashboard 中配置（Settings → Variables）：
+
+| 变量名 | 说明 | 示例 |
+|--------|------|------|
+| `API_BASE_URL` | 目标 API 地址 | `https://anyrouter.top` |
+| `SYSTEM_PROMPT_REPLACEMENT` | System Prompt 替换 | `你是一个有用的AI助手` |
+| `CUSTOM_HEADERS` | 自定义 Headers（JSON） | `{"X-Custom":"value"}` |
+
+### 📚 详细文档
+
+- **完整部署指南**：[CLOUDFLARE_DEPLOY.md](./CLOUDFLARE_DEPLOY.md)
+- **3分钟快速开始**：[QUICKSTART.md](./QUICKSTART.md)
+
+---
+
+## Python 版本部署
+
+### Docker 部署
 
 **使用 Docker Compose：**
 
